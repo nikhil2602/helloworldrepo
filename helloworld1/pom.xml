@@ -16,7 +16,7 @@
     <packaging>sbar</packaging>
 
     <description/>
-    <build>
+   <!-- <build>
         <plugins>
             <plugin>
                 <groupId>com.oracle.adf.plugin</groupId>
@@ -49,7 +49,7 @@
                 </executions>
             </plugin>
         </plugins>
-    </build>
+    </build> -->
     <properties>
         <oracleHome>
             ${env.ORACLE_HOME}
