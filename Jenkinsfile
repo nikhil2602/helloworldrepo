@@ -13,7 +13,7 @@ pipeline {
         //build_status="Checkout_Success";
         //slackNotification (job_name,build_number,build_status,env.STAGE_NAME)
         slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status,env.STAGE_NAME)
-        
+        println("repo name = "+scm.getUserRemoteConfigs()[0].getUrl().tokenize('/')[3].split("\\.")[0]);
       }
     }
      /*stage('Clean WorkSpace'){
