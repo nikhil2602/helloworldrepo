@@ -10,10 +10,10 @@ pipeline {
       steps{
         script {
 		try {
-			//git 'https://github.com/nikhil2602/helloworldrepo.git'
+			git url    //'https://github.com/nikhil2602/helloworldrepo.git'
 			
             		//echo 'ref details  ' + ref
-			echo 'repo url ' + url
+			//echo 'repo url ' + url
 			
 			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 		}
@@ -25,11 +25,11 @@ pipeline {
         }
       }
     }
-    /* stage('Clean WorkSpace'){
+     stage('Clean WorkSpace'){
         steps{
             script {
 			try {
-				bat "mvn clean package -f ./helloworld1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
+				bat "mvn clean package -f ./helloworld1" //-DoracleHome=C:/Oracle/Middleware/Oracle_Home"
 				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 			}
 			catch (Exception e) {
@@ -39,7 +39,7 @@ pipeline {
 			}
         }
     }
-    stage('upload') {
+    /*stage('upload') {
            steps {
               script {
 				try {
@@ -88,7 +88,7 @@ pipeline {
       steps {
 		script {
 		try {
-			bat "mvn pre-integration-test -f ./helloworld1 -DoracleServerUrl=http://localhost:7101/  -DoracleUsername=weblogic -DoraclePassword=welcome1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
+			bat "mvn pre-integration-test -f ./helloworld1" //-DoracleServerUrl=http://localhost:7101/  -DoracleUsername=weblogic -DoraclePassword=welcome1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
             slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 		    
 		}
