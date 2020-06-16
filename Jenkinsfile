@@ -1,13 +1,44 @@
 @Library('pipeline-library-demo')_
-
+def repo_name=name;
 //def build_status1="SUCCESS";
 //def build_status2="FAILURE";
-//def url = clone_url;
+
 pipeline {
     agent any
     stages {
+	  stage('checking_condition') {
+             steps {
+                script {
+                if(repo_name=="helloworldrepo")
+                {
+                    stage('CheckOut'){
 	    
-    stage('CheckOut'){
+      steps{
+        script {
+		try {
+			git clone_url    //'https://github.com/nikhil2602/helloworldrepo.git'
+			slackNotification.status1 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
+		}
+		catch (Exception e) {
+			//println("exception occured");
+			slackNotification.status2 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
+			
+		}
+        }
+      }
+    }
+                }
+                else
+                {
+                 stage('else stage') {
+                       echo "else stage1"
+                    }
+                 }
+               }
+             }
+           }
+//----------------------------------------
+    /*stage('CheckOut'){
 	    
       steps{
         script {
@@ -26,7 +57,7 @@ pipeline {
 		}
         }
       }
-    }
+    }*/
 	    
 	    
     /* stage('Clean WorkSpace'){
