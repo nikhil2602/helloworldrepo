@@ -1,12 +1,11 @@
 @Library('pipeline-library-demo')_
-def i=1;
 //def build_status1="SUCCESS";
 //def build_status2="FAILURE";
 //def url = clone_url;
 pipeline {
     agent any
     stages {
-	    if(i==1) {
+	    
     stage('CheckOut'){
 	    
       steps{
@@ -27,8 +26,8 @@ pipeline {
         }
       }
     }
-	    }
-	    else {
+	    
+	    
      stage('Clean WorkSpace'){
         steps{
             script {
@@ -43,7 +42,7 @@ pipeline {
 			}
         }
     }
-	    }
+	    
     /*stage('upload') {
            steps {
               script {
