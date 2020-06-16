@@ -10,7 +10,7 @@ pipeline {
       steps{
         script {
 		try {
-			git cne_url    //'https://github.com/nikhil2602/helloworldrepo.git'
+			git clone_url    //'https://github.com/nikhil2602/helloworldrepo.git'
 			
             		//echo 'ref details  ' + ref
 			//echo 'repo url ' + url
