@@ -1,7 +1,7 @@
 @Library('pipeline-library-demo')_
 
-def //build_status1="SUCCESS";
-def //build_status2="FAILURE";
+//def build_status1="SUCCESS";
+//def build_status2="FAILURE";
 //def url = clone_url;
 pipeline {
     agent any
