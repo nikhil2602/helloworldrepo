@@ -2,7 +2,6 @@
 
 def build_status1="SUCCESS";
 def build_status2="FAILURE";
-def repo_url=env.GIT_URL;
 pipeline {
     agent any
     stages {
@@ -13,8 +12,8 @@ pipeline {
 			git 'https://github.com/nikhil2602/helloworldrepo.git'
 			
             		echo 'ref details  ' + ref
-		    	//echo 'repo url' + clone_url
-			println(repu_url);
+		    	echo 'repo url' + repository.clone_url
+			
 			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 		}
 		catch (Exception e) {
