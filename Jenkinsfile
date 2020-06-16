@@ -28,6 +28,35 @@ pipeline {
         }
 	//}
     }
+		stage('Clean WorkSpace'){
+        
+            script {
+			try {
+				bat "mvn clean package -f ./helloworld1 -DoracleHome=${oracleHome}"
+				slackNotification.status1 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
+			}
+			catch (Exception e) {
+				//println("exception occured");
+				slackNotification.status2 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
+			}
+			}
+        
+    }
+		stage('Deploy') {
+      
+		script {
+		try {
+			bat "mvn pre-integration-test -f ./helloworld1 -DoracleServerUrl=${oracleServerUrl}  -DoracleUsername=${oracleUsername} -DoraclePassword=${oraclePassword} -DoracleHome=${oracleHome}"
+            slackNotification.status1 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
+		    
+		}
+		 catch (Exception e) {
+				//println("exception occured");
+				slackNotification.status2 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
+			}
+		 }
+	  
+      }
                 }
                 else
                 {
