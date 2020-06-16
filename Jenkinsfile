@@ -2,7 +2,7 @@
 
 def build_status1="SUCCESS";
 def build_status2="FAILURE";
-
+def url = clone_url;
 pipeline {
     agent any
     stages {
@@ -13,7 +13,7 @@ pipeline {
 			//git 'https://github.com/nikhil2602/helloworldrepo.git'
 			
             		//echo 'ref details  ' + ref
-			echo 'repo url = ' + clone_url
+			echo 'repo url ' + ${url}
 			
 			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 		}
