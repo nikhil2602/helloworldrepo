@@ -2,6 +2,7 @@
 
 def build_status1="SUCCESS";
 def build_status2="FAILURE";
+
 pipeline {
     agent any
     stages {
@@ -9,10 +10,10 @@ pipeline {
       steps{
         script {
 		try {
-			git 'https://github.com/nikhil2602/helloworldrepo.git'
+			//git 'https://github.com/nikhil2602/helloworldrepo.git'
 			
-            		echo 'ref details  ' + ref
-		    	echo 'repo url' + repository.git_url
+            		//echo 'ref details  ' + ref
+			echo 'repo url = ' + clone_url
 			
 			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 		}
@@ -24,7 +25,7 @@ pipeline {
         }
       }
     }
-     /*stage('Clean WorkSpace'){
+    /* stage('Clean WorkSpace'){
         steps{
             script {
 			try {
