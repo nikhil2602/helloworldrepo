@@ -13,7 +13,8 @@ pipeline {
                 {
                     stage('CheckOut'){
 	    
-      steps{
+      //steps{
+			    echo "inside chceckout"
         script {
 		try {
 			git clone_url    //'https://github.com/nikhil2602/helloworldrepo.git'
@@ -25,7 +26,7 @@ pipeline {
 			
 		}
         }
-      }
+	//}
     }
                 }
                 else
