@@ -1,7 +1,7 @@
 @Library('pipeline-library-demo')_
 
-def build_status1="SUCCESS";
-def build_status2="FAILURE";
+def //build_status1="SUCCESS";
+def //build_status2="FAILURE";
 //def url = clone_url;
 pipeline {
     agent any
@@ -15,11 +15,11 @@ pipeline {
             		//echo 'ref details  ' + ref
 			//echo 'repo url ' + url
 			
-			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+			slackNotification.status1 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 		}
 		catch (Exception e) {
 			//println("exception occured");
-			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+			slackNotification.status2 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 			
 		}
         }
@@ -30,16 +30,16 @@ pipeline {
             script {
 			try {
 				bat "mvn clean package -f ./helloworld1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
-				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+				slackNotification.status1 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 			}
 			catch (Exception e) {
 				//println("exception occured");
-				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+				slackNotification.status2 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 			}
 			}
         }
     }
-    /*stage('upload') {
+    stage('upload') {
            steps {
               script {
 				try {
@@ -52,11 +52,11 @@ pipeline {
                  }"""
                 
                  server.upload(uploadSpec) 
-                 slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+                 slackNotification.status1 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 				}
 				catch (Exception e) {
 				//println("exception occured");
-				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+				slackNotification.status2 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 				}
                }
             }
@@ -74,37 +74,37 @@ pipeline {
                  }"""
                 
                  server.download(downloadSpec)
-				 slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+				 slackNotification.status1 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
                   
               }
 			catch (Exception e) {
 				//println("exception occured");
-				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+				slackNotification.status2 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 			}	
                }
             }
-    }*/
+    }
     stage('Deploy') {
       steps {
 		script {
 		try {
 			bat "mvn pre-integration-test -f ./helloworld1 -DoracleServerUrl=http://localhost:7101/  -DoracleUsername=weblogic -DoraclePassword=welcome1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
-            slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+            slackNotification.status1 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 		    
 		}
 		 catch (Exception e) {
 				//println("exception occured");
-				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+				slackNotification.status2 (env.JOB_NAME,env.BUILD_NUMBER,env.STAGE_NAME)
 			}
 		 }
 	  }
       }
       
     }
-    /*post {
+    post {
         always {
-            mail bcc: '', body: 'Hello World', cc: '', from: '', replyTo: '', subject: 'Test', to: 'gnikhilyadav26@gmail.com'
+            mail bcc: '', body: 'Consolidated OSB', cc: '', from: '', replyTo: '', subject: 'Test', to: 'gnikhilyadav26@gmail.com'
         }
-    }*/
+    }
 }
 
