@@ -1,36 +1,47 @@
 @Library('pipeline-library-demo')_
-//def job_name=env.JOB_NAME;
-//def build_number=env.BUILD_NUMBER;
-def build_status="SUCCESS";
+
+def build_status1="SUCCESS";
+def build_status2="FAILURE";
 
 pipeline {
     agent any
     stages {
     stage('CheckOut'){
       steps{
-        git 'https://github.com/nikhil2602/helloworldrepo.git'
-        sayHello 'Working'
-        //build_status="Checkout_Success";
-        //slackNotification (job_name,build_number,build_status,env.STAGE_NAME)
-        slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status,env.STAGE_NAME)
-        println("repo name = "+scm.getUserRemoteConfigs()[0].getUrl().tokenize('/')[3].split("\\.")[0]);
+        script {
+		try {
+			git 'https://github.com/nikhil2602/helloworldrepo.git'
+			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+            echo 'ref details' + ref
+		    //echo 'repo url' + clone_url
+		    
+		}
+		catch (Exception e) {
+			//println("exception occured");
+			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+			
+		}
+        }
       }
     }
-     /*stage('Clean WorkSpace'){
+     stage('Clean WorkSpace'){
         steps{
-            
-            
-                
-                 bat "mvn clean package -f ./helloworld1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
-            
-             //slackSend (color: '#FFFF00', message: "COMPLETED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' SUCCESS")
-            //slackNotification
-           
+            script {
+			try {
+				bat "mvn clean package -f ./helloworld1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
+				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+			}
+			catch (Exception e) {
+				//println("exception occured");
+				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+			}
+			}
         }
-    }*/
-    /*stage('upload') {
+    }
+    stage('upload') {
            steps {
-              script { 
+              script {
+				try {
                  def server = Artifactory.server 'jenkins-artifactory-server'
                  def uploadSpec = """{
                     "files": [{
@@ -38,14 +49,21 @@ pipeline {
                        "target": "helloworld_repo"
                     }]
                  }"""
-
+                
                  server.upload(uploadSpec) 
+                 slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+				}
+				catch (Exception e) {
+				//println("exception occured");
+				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+				}
                }
             }
     }
     stage('download') {
            steps {
-              script { 
+              script {
+				try{
                  def server = Artifactory.server 'jenkins-artifactory-server'
                  def downloadSpec = """{
                     "files": [{
@@ -53,16 +71,39 @@ pipeline {
                        "target": "C:\\Users\\Vikram\\.jenkins\\jobs\\artifactory_test\\workspace\\download_artifact\\sbconfig.sbar"
                     }]
                  }"""
-
-                 server.download(downloadSpec) 
+                
+                 server.download(downloadSpec)
+				 slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+                  
+              }
+			catch (Exception e) {
+				//println("exception occured");
+				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+			}	
                }
             }
-    }*/
-    /*stage('Deploy') {
+    }
+    stage('Deploy') {
       steps {
-        bat "mvn pre-integration-test -f ./helloworld1 -DoracleServerUrl=http://localhost:7101/  -DoracleUsername=weblogic -DoraclePassword=welcome1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
-         }
-      }*/
+		script {
+		try {
+			bat "mvn pre-integration-test -f ./helloworld1 -DoracleServerUrl=http://localhost:7101/  -DoracleUsername=weblogic -DoraclePassword=welcome1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
+            slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
+		    
+		}
+		 catch (Exception e) {
+				//println("exception occured");
+				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status2,env.STAGE_NAME)
+			}
+		 }
+	  }
+      }
       
     }
+    post {
+        always {
+            mail bcc: '', body: 'Hello World', cc: '', from: '', replyTo: '', subject: 'Test', to: 'gnikhilyadav26@gmail.com'
+        }
+    }
 }
+
