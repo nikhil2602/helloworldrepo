@@ -29,7 +29,7 @@ pipeline {
         steps{
             script {
 			try {
-				bat "mvn clean package -f ./helloworld1" -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
+				bat "mvn clean package -f ./helloworld1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
 				slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 			}
 			catch (Exception e) {
@@ -88,7 +88,7 @@ pipeline {
       steps {
 		script {
 		try {
-			bat "mvn pre-integration-test -f ./helloworld1" -DoracleServerUrl=http://localhost:7101/  -DoracleUsername=weblogic -DoraclePassword=welcome1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
+			bat "mvn pre-integration-test -f ./helloworld1 -DoracleServerUrl=http://localhost:7101/  -DoracleUsername=weblogic -DoraclePassword=welcome1 -DoracleHome=C:/Oracle/Middleware/Oracle_Home"
             slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 		    
 		}
