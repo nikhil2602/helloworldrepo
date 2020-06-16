@@ -11,10 +11,11 @@ pipeline {
         script {
 		try {
 			git 'https://github.com/nikhil2602/helloworldrepo.git'
-			slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
-            echo 'ref details' + ref
-		    //echo 'repo url' + clone_url
-		    
+			
+            		echo 'ref details  ' + ref
+		    	echo 'repo url' + clone_url
+			println(${env.GIT_URL});
+		    	slackNotification (env.JOB_NAME,env.BUILD_NUMBER,build_status1,env.STAGE_NAME)
 		}
 		catch (Exception e) {
 			//println("exception occured");
@@ -24,7 +25,7 @@ pipeline {
         }
       }
     }
-     stage('Clean WorkSpace'){
+     /*stage('Clean WorkSpace'){
         steps{
             script {
 			try {
@@ -97,7 +98,7 @@ pipeline {
 			}
 		 }
 	  }
-      }
+      }*/
       
     }
     post {
