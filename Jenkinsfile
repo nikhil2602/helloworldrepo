@@ -2,7 +2,7 @@
 
 def build_status1="SUCCESS";
 def build_status2="FAILURE";
-def url = clone_url;
+//def url = clone_url;
 pipeline {
     agent any
     stages {
@@ -10,7 +10,7 @@ pipeline {
       steps{
         script {
 		try {
-			git url    //'https://github.com/nikhil2602/helloworldrepo.git'
+			git clone_url    //'https://github.com/nikhil2602/helloworldrepo.git'
 			
             		//echo 'ref details  ' + ref
 			//echo 'repo url ' + url
