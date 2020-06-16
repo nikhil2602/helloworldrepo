@@ -1,25 +1,13 @@
 @Library('pipeline-library-demo')_
-def var1="osb";
+
 //def build_status1="SUCCESS";
 //def build_status2="FAILURE";
 //def url = clone_url;
 pipeline {
     agent any
     stages {
-	    stage('check') {
-		    steps {
-			    script {
-				    if(var1=="osb"){
-					    println("if exe");
-				    	osbproject()
-				    }
-				    else {
-					println("else exe");   
-				    }
-			    }    
-		    }
-	    }
-    /*stage('CheckOut'){
+	    
+    stage('CheckOut'){
 	    
       steps{
         script {
@@ -38,7 +26,7 @@ pipeline {
 		}
         }
       }
-    }*/
+    }
 	    
 	    
     /* stage('Clean WorkSpace'){
