@@ -10,7 +10,7 @@ pipeline {
       steps{
         script {
 		try {
-			git clone_url    //'https://github.com/nikhil2602/helloworldrepo.git'
+			git cne_url    //'https://github.com/nikhil2602/helloworldrepo.git'
 			
             		//echo 'ref details  ' + ref
 			//echo 'repo url ' + url
@@ -25,7 +25,7 @@ pipeline {
         }
       }
     }
-     stage('Clean WorkSpace'){
+     /*stage('Clean WorkSpace'){
         steps{
             script {
 			try {
@@ -98,13 +98,13 @@ pipeline {
 			}
 		 }
 	  }
-      }
+      }*/
       
     }
-    post {
+    /*post {
         always {
             mail bcc: '', body: 'Consolidated OSB', cc: '', from: '', replyTo: '', subject: 'Test', to: 'gnikhilyadav26@gmail.com'
         }
-    }
+    }*/
 }
 
